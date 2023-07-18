@@ -1,5 +1,6 @@
 import { uploadPicture } from "../middleware/uploadPictureMiddleware";
 import Post from "../models/Post";
+import Comment from "../models/Comment";
 import { fileRemover } from "../utils/fileRemover";
 import { v4 as uuidv4 } from "uuid";
 
@@ -77,5 +78,22 @@ const updatePost = async (req, res, next) => {
     next(error);
   }
 };
+const deletePost = async (req, res, next) => {
+  try {
+    const post = await Post.findOneAndDelete({ slug: req.params.slug });
 
-export { createPost, updatePost };
+    if (!post) {
+      const error = new Error("Posy not Found");
+      return next(error);
+    }
+
+    await Comment.deleteMany({ post: post._id });
+    return res.json({
+      message: "Post Deleted Successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { createPost, updatePost, deletePost };
