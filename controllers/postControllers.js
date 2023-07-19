@@ -78,22 +78,63 @@ const updatePost = async (req, res, next) => {
     next(error);
   }
 };
+
 const deletePost = async (req, res, next) => {
   try {
     const post = await Post.findOneAndDelete({ slug: req.params.slug });
 
     if (!post) {
-      const error = new Error("Posy not Found");
+      const error = new Error("Post aws not found");
       return next(error);
     }
 
     await Comment.deleteMany({ post: post._id });
+
     return res.json({
-      message: "Post Deleted Successfully",
+      message: "Post is successfully deleted",
     });
   } catch (error) {
     next(error);
   }
 };
 
-export { createPost, updatePost, deletePost };
+const getPost = async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ slug: req.params.slug }).populate([
+      {
+        path: "user",
+        select: ["avatar", "name"],
+      },
+      {
+        path: "comments",
+        match: {
+          check: true,
+          parent: null,
+        },
+        populate: [
+          {
+            path: "user",
+            select: ["avatar", "name"],
+          },
+          {
+            path: "replies",
+            match: {
+              check: true,
+            },
+          },
+        ],
+      },
+    ]);
+
+    if (!post) {
+      const error = new Error("Post was not found");
+      return next(error);
+    }
+
+    return res.json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { createPost, updatePost, deletePost, getPost };
