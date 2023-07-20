@@ -30,7 +30,7 @@ const updatePost = async (req, res, next) => {
     const post = await Post.findOne({ slug: req.params.slug });
 
     if (!post) {
-      const error = new Error("Post aws not found");
+      const error = new Error("Post aws not Found");
       next(error);
       return;
     }
@@ -52,7 +52,7 @@ const updatePost = async (req, res, next) => {
     upload(req, res, async function (err) {
       if (err) {
         const error = new Error(
-          "An unknown error occured when uploading " + err.message
+          "An Unknown Error Occured when Uploading " + err.message
         );
         next(error);
       } else {
@@ -84,14 +84,14 @@ const deletePost = async (req, res, next) => {
     const post = await Post.findOneAndDelete({ slug: req.params.slug });
 
     if (!post) {
-      const error = new Error("Post aws not found");
+      const error = new Error("Post aws not Found");
       return next(error);
     }
 
     await Comment.deleteMany({ post: post._id });
 
     return res.json({
-      message: "Post is successfully deleted",
+      message: "Post is Successfully Deleted",
     });
   } catch (error) {
     next(error);
@@ -127,7 +127,7 @@ const getPost = async (req, res, next) => {
     ]);
 
     if (!post) {
-      const error = new Error("Post was not found");
+      const error = new Error("Post was not Found");
       return next(error);
     }
 

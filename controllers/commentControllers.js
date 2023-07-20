@@ -8,7 +8,7 @@ const createComment = async (req, res, next) => {
     const post = await Post.findOne({ slug: slug });
 
     if (!post) {
-      const error = new Error("Post was not found");
+      const error = new Error("Post was not Found");
       return next(error);
     }
 
