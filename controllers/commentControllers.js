@@ -8,7 +8,7 @@ const createComment = async (req, res, next) => {
     const post = await Post.findOne({ slug: slug });
 
     if (!post) {
-      const error = new Error("Post was not found");
+      const error = new Error("Unable to Find Post, Come Back Later");
       return next(error);
     }
 
@@ -34,7 +34,7 @@ const updateComment = async (req, res, next) => {
     const comment = await Comment.findById(req.params.commentId);
 
     if (!comment) {
-      const error = new Error("Comment was not found");
+      const error = new Error("Unable to Find Comment, Come Back Later");
       return next(error);
     }
 
@@ -53,12 +53,12 @@ const deleteComment = async (req, res, next) => {
     await Comment.deleteMany({ parent: comment._id });
 
     if (!comment) {
-      const error = new Error("Comment was not found");
+      const error = new Error("Unable to Find Comment, Come Back Later");
       return next(error);
     }
 
     return res.json({
-      message: "Comment is deleted successfully",
+      message: "Comment has been Deleted Successfully",
     });
   } catch (error) {
     next(error);

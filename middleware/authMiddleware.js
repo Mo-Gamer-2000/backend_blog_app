@@ -12,12 +12,12 @@ export const authGuard = async (req, res, next) => {
       req.user = await User.findById(id).select("-password");
       next();
     } catch (error) {
-      let err = new Error("Not authorized, Token failed");
+      let err = new Error("Not Authorized, Token Failed");
       err.statusCode = 401;
       next(err);
     }
   } else {
-    let error = new Error("Not authorized, No token");
+    let error = new Error("Not Authorized, No Token");
     error.statusCode = 401;
     next(error);
   }
@@ -27,7 +27,7 @@ export const adminGuard = (req, res, next) => {
   if (req.user && req.user.admin) {
     next();
   } else {
-    let error = new Error("Not authorized as an admn");
+    let error = new Error("Not Authorized as an Admin");
     error.statusCode = 401;
     next(error);
   }
