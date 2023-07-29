@@ -143,6 +143,10 @@ const getPost = async (req, res, next) => {
   }
 };
 
+{
+  /* Dynamic Search & Pagination of the Posts (Backend)*/
+}
+
 const getAllPosts = async (req, res, next) => {
   try {
     const filter = req.query.searchKeyword;
