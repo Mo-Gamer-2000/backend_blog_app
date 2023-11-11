@@ -6,7 +6,7 @@ const createPostCategory = async (req, res, next) => {
 
     const postCategory = await PostCategories.findOne({ title });
 
-    if (post) {
+    if (postCategory) {
       const error = new Error("Category is already created!");
       return next(error);
     }
