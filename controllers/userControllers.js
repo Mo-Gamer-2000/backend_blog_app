@@ -212,7 +212,7 @@ const getAllUsers = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    let user = await User.findById(req, params.userId);
+    let user = await User.findById(req.params.userId);
 
     if (!user) {
       throw new Error("User not found");
